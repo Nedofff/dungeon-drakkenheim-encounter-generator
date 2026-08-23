@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151417">
+  <meta name="description" content="Мастерский генератор случайных событий для Драккенхейма">
+  <title>Хроники Дымки — генератор событий Драккенхейма</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead__mark" aria-hidden="true"><span>D</span></div>
+    <div>
+      <p class="eyebrow">Мастерский журнал экспедиции</p>
+      <h1>Хроники Дымки</h1>
+    </div>
+    <button class="icon-button" id="open-history" type="button" aria-label="Открыть историю бросков" title="История бросков">
+      <span aria-hidden="true">↺</span><span class="history-count" id="history-count">0</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="control-panel" aria-labelledby="generator-title">
+      <div class="control-panel__heading">
+        <div>
+          <p class="eyebrow">Шаг 1</p>
+          <h2 id="generator-title">Где сейчас отряд?</h2>
+        </div>
+        <p class="hint">Таблица и куб выбираются автоматически</p>
+      </div>
+
+      <fieldset class="location-picker" id="location-picker">
+        <legend class="sr-only">Выберите район</legend>
+        <label class="location-option">
+          <input type="radio" name="location" value="sewers">
+          <span class="location-option__icon" aria-hidden="true">≋</span>
+          <span><strong>Канализация</strong><small>1к20 · тесные тоннели</small></span>
+        </label>
+        <label class="location-option">
+          <input type="radio" name="location" value="outer" checked>
+          <span class="location-option__icon" aria-hidden="true">⌂</span>
+          <span><strong>Внешний город</strong><small>1к100 · окраины руин</small></span>
+        </label>
+        <label class="location-option">
+          <input type="radio" name="location" value="inner">
+          <span class="location-option__icon" aria-hidden="true">♜</span>
+          <span><strong>Внутренний город</strong><small>1к100 · сердце Дымки</small></span>
+        </label>
+      </fieldset>
+
+      <div class="extras" aria-label="Дополнительные броски">
+        <p><span class="eyebrow">Шаг 2</span> Что добавить к сцене?</p>
+        <label class="switch"><input type="checkbox" id="roll-setting" checked><span aria-hidden="true"></span> Обычная локация <small>1к10</small></label>
+        <label class="switch"><input type="checkbox" id="roll-ruin"><span aria-hidden="true"></span> Искривлённые руины <small>1к10</small></label>
+        <label class="switch"><input type="checkbox" id="roll-find"><span aria-hidden="true"></span> Удачная находка <small>1к20</small></label>
+      </div>
+
+      <button class="roll-button" id="roll-button" type="button">
+        <span class="die" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span><strong>Бросить кубы</strong><small>или нажмите пробел</small></span>
+      </button>
+    </section>
+
+    <section class="results" id="results" aria-live="polite" aria-atomic="false">
+      <div class="empty-state">
+        <div class="empty-state__seal" aria-hidden="true"><span>✦</span></div>
+        <h2>Дымка ждёт</h2>
+        <p>Выберите район и бросьте кубы. Здесь появится полный разбор сцены.</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="history-drawer" id="history-dialog">
+    <div class="history-drawer__header">
+      <div><p class="eyebrow">Журнал</p><h2>История бросков</h2></div>
+      <button class="icon-button" id="close-history" type="button" aria-label="Закрыть">×</button>
+    </div>
+    <div id="history-list" class="history-list"></div>
+    <button class="text-button" id="clear-history" type="button">Очистить журнал</button>
+  </dialog>
+
+  <template id="result-template">
+    <article class="encounter-card">
+      <header class="encounter-card__header">
+        <div class="roll-badge"><span class="roll-badge__die"></span><strong></strong><small></small></div>
+        <div class="encounter-card__title"><p class="eyebrow"></p><h2></h2></div>
+      </header>
+      <div class="encounter-card__body"></div>
+      <footer class="encounter-card__footer"></footer>
+    </article>
+  </template>
+
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
